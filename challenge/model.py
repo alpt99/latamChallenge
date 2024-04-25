@@ -15,6 +15,12 @@ class DelayModel:
     ):
         # self._model = None # Model should be saved in this attribute.
         self._model = xgb.XGBClassifier(random_state=1, learning_rate=0.01)
+        self.data = pd.read_csv(filepath_or_buffer="/code/data/data.csv")
+        features, target = self.preprocess(
+            data=self.data,
+            target_column="delay"
+        )
+        self.fit(features, target)
 
     def preprocess(
         self,
