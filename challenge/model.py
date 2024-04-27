@@ -69,8 +69,6 @@ class DelayModel:
         n_y0 = len(target[target_series == 0])
         n_y1 = len(target[target_series == 1])
         scale = n_y0/n_y1
-        
-        # self._model = xgb.XGBClassifier(random_state=1, learning_rate=0.01, scale_pos_weight = scale)
         self._model.set_params(random_state=1, learning_rate=0.01, scale_pos_weight = scale)
         self._model = self._model.fit(features, target)
 

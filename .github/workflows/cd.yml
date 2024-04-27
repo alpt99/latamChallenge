@@ -3,7 +3,7 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "main", "ci-cd-bueno" ]
+    branches: [ "main", "ci-cd-bueno", "fix-multiple" ]
 
 env:
   PROJECT_ID: sharp-ring-421520  # TODO: update Google Cloud project id
@@ -13,7 +13,25 @@ env:
   REGION: southamerica-west1 # TODO: update Cloud Run service region
 
 jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t mydockerimage .
+
+      - name: Run container
+        run: docker run -p 8080:8080 -d --name mycontainer mydockerimage
+
+      - name: Run tests api
+        run: docker exec mycontainer bash -c "make api-test"
+
+      - name: Run tests model
+        run: docker exec mycontainer bash -c "make model-test"
   deploy:
+    needs: tests
     # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
