@@ -1,12 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="46.125" timestamp="2024-04-23T00:12:29.808928" hostname="MacBook-Air-de-Alejandro.local"><testcase classname="" name="tests.model.test_model" time="0.000"><error message="collection failure">ImportError while importing test module '/Users/alejandrolopez/Documents/software-proyects/challenge_MLE/tests/model/test_model.py'.
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="9.591" timestamp="2024-04-24T18:56:50.937888" hostname="MacBook-Air-de-Alejandro.local"><testcase classname="" name="tests.model.test_model" time="0.000"><error message="collection failure">ImportError while importing test module '/Users/alejandrolopez/Documents/software-proyects/latamChallenge/tests/model/test_model.py'.
 Hint: make sure your test modules/packages have valid Python names.
 Traceback:
-../../../opt/anaconda3/lib/python3.8/importlib/__init__.py:127: in import_module
+../../../.pyenv/versions/3.9.2/lib/python3.9/importlib/__init__.py:127: in import_module
     return _bootstrap._gcd_import(name[level:], package, level)
-tests/model/test_model.py:6: in &lt;module&gt;
-    from challenge.model import DelayModel
-challenge/__init__.py:1: in &lt;module&gt;
-    from challenge.api import app
-challenge/api.py:1: in &lt;module&gt;
-    import fastapi
-E   ModuleNotFoundError: No module named 'fastapi'</error></testcase></testsuite></testsuites>
+tests/model/test_model.py:4: in &lt;module&gt;
+    from sklearn.metrics import classification_report
+E   ModuleNotFoundError: No module named 'sklearn'</error></testcase></testsuite></testsuites>
