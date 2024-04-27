@@ -16,6 +16,12 @@ app = FastAPI()
 
 delay_model = DelayModel()
 
+@app.get("/", status_code=200)
+async def get_index() -> dict:
+    return {
+        "status": "Hello World"
+    }
+
 
 @app.get("/health", status_code=200)
 async def get_health() -> dict:
@@ -50,12 +56,13 @@ async def post_predict(flights : Flights) -> dict:
 
     # Normalize the data
     flights_data = pd.json_normalize(flights)
+    preprocess_data = delay_model.preprocess(data=flights_data)
 
     # Log the normalized data
-    print("Normalized flights data:", flights_data)
+    print("Normalized flights data:", preprocess_data)
 
     # Predict using the delay model
-    predictions = delay_model.predict(flights_data)
+    predictions = delay_model.predict(preprocess_data)
 
     # Log the predictions
     print("Predictions:", predictions)
