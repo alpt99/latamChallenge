@@ -39,22 +39,26 @@ class DelayModel:
             "OPERA_Sky Airline",
             "OPERA_Copa Air"
         ]
-        data['min_diff'] = data.apply(self.get_min_diff, axis = 1)
-        threshold_in_minutes = 15
-        data['delay'] = np.where(data['min_diff'] > threshold_in_minutes, 1, 0)
-        # Crear variable delay con columnas debidas
-        # training_data = shuffle(data[['OPERA', 'MES', 'TIPOVUELO', 'SIGLADES', 'DIANOM', 'delay']], random_state = 111)
+        features_zeros = pd.DataFrame(0, index=data.index, columns=top_10_features)
         features = pd.concat([
             pd.get_dummies(data['OPERA'], prefix = 'OPERA'),
             pd.get_dummies(data['TIPOVUELO'], prefix = 'TIPOVUELO'), 
             pd.get_dummies(data['MES'], prefix = 'MES')], 
             axis = 1
         )
-
-        target = pd.DataFrame(data['delay'], columns=['delay'])
+        intersection = features_zeros.columns.intersection(features.columns)
+        for col in intersection:
+            features_zeros[col] = features[col]
+        final_features = features_zeros
+        if target_column is not None:
+            data['min_diff'] = data.apply(self.get_min_diff, axis = 1)
+            threshold_in_minutes = 15
+            data['delay'] = np.where(data['min_diff'] > threshold_in_minutes, 1, 0)
+            target = pd.DataFrame(data['delay'], columns=['delay'])
         if target_column is None:
-            return features[top_10_features]
-        return (features[top_10_features],target)
+            # return features[top_10_features]
+            return final_features
+        return (final_features[top_10_features],target)
 
     def fit(
         self,
