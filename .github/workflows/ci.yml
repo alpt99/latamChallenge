@@ -16,7 +16,7 @@ jobs:
         run: docker build -t mydockerimage .
       
       - name: Run container
-        run: docker run 8080:8080 -d --name mycontainer mydockerimage
+        run: docker run -p 8080:8080 -d --name mycontainer mydockerimage
       
       - name: Run tests
         run: docker exec mycontainer bash -c "make api-test"
